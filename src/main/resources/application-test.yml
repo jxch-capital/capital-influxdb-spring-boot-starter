@@ -1,0 +1,8 @@
+capital:
+  influx:
+    url: http://localhost:48086
+    token: 960135cf-e65e-4a35-83a3-3205b91e4f06
+    org: capital-influxdb-spring-boot-starter
+    bucket: capital-influxdb-spring-boot-starter
+    username: capital-influxdb-spring-boot-starter
+    password: capital-influxdb-spring-boot-starter
