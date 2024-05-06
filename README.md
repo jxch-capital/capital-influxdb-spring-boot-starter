@@ -5,7 +5,7 @@ influxdb集成springboot
 0. 导入依赖
 ```xml
 <dependency>
-    <groupId>org.jxch.capital</groupId>
+    <groupId>io.github.jxch</groupId>
     <artifactId>capital-influxdb-spring-boot-starter</artifactId>
     <version>3.2.5-alpha.1</version>
 </dependency>

@@ -4,9 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.jxch.capital</groupId>
+    <groupId>io.github.jxch</groupId>
     <artifactId>capital-influxdb-spring-boot-starter</artifactId>
     <version>3.2.5-alpha.1</version>
+    <name>capital-influxdb-spring-boot-starter</name>
+    <description>influxdb集成springboot</description>
+    <url>https://github.com/jxch-capital/capital-influxdb-spring-boot-starter</url>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -21,6 +24,13 @@
         <lombok.version>1.18.32</lombok.version>
         <influxdb.version>7.0.0</influxdb.version>
         <hutool.version>5.8.27</hutool.version>
+        <spring-boot.version>3.2.5</spring-boot.version>
+        <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
+        <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
+        <maven-gpg-plugin.version>3.2.4</maven-gpg-plugin.version>
+        <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
+        <maven-release-plugin.version>3.0.1</maven-release-plugin.version>
+        <central-publishing-maven-plugin.version>0.4.0</central-publishing-maven-plugin.version>
     </properties>
 
     <dependencies>
@@ -51,16 +61,129 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${maven-source-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven-javadoc-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.sonatype.plugins</groupId>-->
+<!--                <artifactId>nexus-staging-maven-plugin</artifactId>-->
+<!--                <version>${nexus-staging-maven-plugin.version}</version>-->
+<!--                <extensions>true</extensions>-->
+<!--                <configuration>-->
+<!--                    <serverId>ossrh</serverId>-->
+<!--                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>-->
+<!--                    <autoReleaseAfterClose>true</autoReleaseAfterClose>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>${central-publishing-maven-plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                    <tokenAuth>true</tokenAuth>
+                    <autoPublish>true</autoPublish>
+                    <waitUntil>published</waitUntil>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>${maven-release-plugin.version}</version>
+                <configuration>
+                    <goals>deploy nexus-staging:release</goals>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <releaseProfiles>release</releaseProfiles>
+<!--                    <goals>deploy</goals>-->
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>${maven-gpg-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:git://github.com/jxch-capital/capital-influxdb-spring-boot-starter.git</connection>
+        <developerConnection>scm:git:ssh://github.com:jxch-capital/capital-influxdb-spring-boot-starter.git</developerConnection>
+        <url>https://github.com/jxch-capital/capital-influxdb-spring-boot-starter</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>jxch</id>
+            <name>姜希成</name>
+            <email>xicheng.jiang.1@gmail.com</email>
+            <url>https://github.com/jxch</url>
+        </developer>
+    </developers>
+
     <distributionManagement>
-        <repository>
-            <id>nexus3</id>
-            <name>Internal Release Repository</name>
-            <url>http://localhost:38081/repository/maven-releases/</url>
-        </repository>
+<!--        <repository>-->
+<!--            <id>nexus3</id>-->
+<!--            <name>Internal Release Repository</name>-->
+<!--            <url>http://localhost:38081/repository/maven-releases/</url>-->
+<!--        </repository>-->
+<!--        <snapshotRepository>-->
+<!--            <id>nexus3</id>-->
+<!--            <name>Internal Snapshot Repository</name>-->
+<!--            <url>http://localhost:38081/repository/maven-snapshots/</url>-->
+<!--        </snapshotRepository>-->
+
         <snapshotRepository>
-            <id>nexus3</id>
-            <name>Internal Snapshot Repository</name>
-            <url>http://localhost:38081/repository/maven-snapshots/</url>
+            <id>central</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
+        <repository>
+            <id>central</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
     </distributionManagement>
+
 </project>
